@@ -33,23 +33,23 @@ var UserSchema = new mongoose.Schema({
 });
 
 UserSchema.methods.toJSON = function () {
-  var user = this;
-  var userObject = user.toObject();
+  var user = this
+  var userObject = user.toObject()
 
-  return _.pick(userObject, ['_id', 'email']);
-};
+  return _.pick(userObject, ['_id', 'email'])
+}
 
 UserSchema.methods.generateAuthToken = function () {
-  var user = this;
-  var access = 'auth';
-  var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString();
+  var user = this
+  var access = 'auth'
+  var token = jwt.sign({_id: user._id.toHexString(), access}, 'abc123').toString()
 
-  user.tokens.push({access, token});
+  user.tokens.push({access, token})
 
   return user.save().then(() => {
-    return token;
-  });
-};
+    return token
+  })
+}
 
 var User = mongoose.model('User', UserSchema);
 
